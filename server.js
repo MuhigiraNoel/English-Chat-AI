@@ -38,68 +38,82 @@ const db = new sqlite3.Database(process.env.DB_FILE || "users.db", (err) => {
 });
 
 // Create users table
-db.run(`
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    fullname TEXT,
-    email TEXT,
-    username TEXT,
-    password TEXT,
-    profilePicture TEXT,
-    role TEXT DEFAULT 'user'
-)
-`);
-
-db.run(`
-ALTER TABLE users
-ADD COLUMN role TEXT DEFAULT 'user'
-`, (err) => {
-    if (err && !err.message.includes("duplicate column")) {
-        console.error(err.message);
-    }
-});
-db.run(`
-ALTER TABLE users
-ADD COLUMN blocked INTEGER DEFAULT 0
-`, (err) => {
-    // Ignore error if the column already exists
-});
-// Give your account admin permission
-
-
-// Create rooms table
 // =========================
-// SETTINGS TABLE
+// DATABASE INITIALIZATION
 // =========================
-db.run(`
-CREATE TABLE IF NOT EXISTS settings (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    websiteName TEXT,
-    homepageTitle TEXT,
-    contactEmail TEXT,
-    maintenanceMode INTEGER DEFAULT 0
-)
-`, (err) => {
 
-    if (err) {
-        console.error(err.message);
-        return;
-    }
+db.serialize(() => {
 
+    // USERS TABLE
     db.run(`
-    INSERT OR IGNORE INTO settings
-    (id, websiteName, homepageTitle, contactEmail, maintenanceMode)
-    VALUES
-    (
-        1,
-        'SpeakUp Global',
-        'Practice English with people worldwide',
-        'support@speakupglobal.com',
-        0
-    )
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            fullname TEXT,
+            email TEXT,
+            username TEXT,
+            password TEXT,
+            profilePicture TEXT,
+            role TEXT DEFAULT 'user',
+            blocked INTEGER DEFAULT 0
+        )
     `);
 
+    // ROOMS TABLE
+    db.run(`
+        CREATE TABLE IF NOT EXISTS rooms (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            roomName TEXT,
+            language TEXT,
+            level TEXT,
+            maxParticipants INTEGER
+        )
+    `);
+
+    // ANNOUNCEMENTS TABLE
+    db.run(`
+        CREATE TABLE IF NOT EXISTS announcements (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            message TEXT,
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    // SETTINGS TABLE
+    db.run(`
+        CREATE TABLE IF NOT EXISTS settings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            websiteName TEXT,
+            homepageTitle TEXT,
+            contactEmail TEXT,
+            maintenanceMode INTEGER DEFAULT 0
+        )
+    `);
+
+    // Default settings
+    db.run(`
+        INSERT OR IGNORE INTO settings
+        (id, websiteName, homepageTitle, contactEmail, maintenanceMode)
+        VALUES
+        (
+            1,
+            'SpeakUp Global',
+            'Practice English with people worldwide',
+            'support@speakupglobal.com',
+            0
+        )
+             `, (err) => {
+
+        if (err) {
+            console.error("Database initialization error:", err.message);
+        } else {
+            console.log("Database tables initialized successfully.");
+        }
+
+    });
+
 });
+
+
 // Serve files from the public folder
 // Configure file uploads
 const storage = multer.diskStorage({
@@ -935,6 +949,26 @@ io.to(roomId).emit("user-left", {
     });
 
 });
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+db.serialize(() => {
+
+    db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='users'", (err, row) => {
+
+        if (err) {
+            console.error("Database check error:", err.message);
+            return;
+        }
+
+        if (!row) {
+            console.error("Users table was not created.");
+            return;
+        }
+
+        console.log("Database is ready.");
+
+        server.listen(PORT, "0.0.0.0", () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+
+    });
+
 });
