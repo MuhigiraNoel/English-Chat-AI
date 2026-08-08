@@ -1,0 +1,480 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SpeakUp Global</title>
+<link rel="icon" type="image/png" href="/Image/logo.png">
+<link rel="stylesheet" href="style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+<div class="logo">
+
+🎤 <span>SpeakUp Global</span>
+
+</div>
+
+<div class="nav-search">
+
+<input
+type="text"
+placeholder="🔍 Search rooms...">
+
+</div>
+
+<ul class="nav-links">
+
+<li><a href="index.html">🏠 Home</a></li>
+
+<li><a href="#rooms">🌍 Rooms</a></li>
+
+<li><a href="community.html">👥 Community</a></li>
+
+<li><a href="about.html">ℹ️ About</a></li>
+
+<li><a href="login.html">🔑 Login</a></li>
+
+<li><a href="register.html">📝 Register</a></li>
+
+<li id="adminMenu" style="display:none;">
+    <a href="/admin">👑 Admin</a>
+</li>
+</ul>
+
+</nav>
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="dashboard">
+
+<div class="dashboard-card">
+
+🌍
+
+<h2 id="countryCount">195+</h2>
+
+<p>Countries</p>
+
+</div>
+
+<div class="dashboard-card">
+
+👥
+
+<h2 id="onlineUsers">0</h2>
+
+<p>Online Users</p>
+
+</div>
+
+<div class="dashboard-card">
+
+🏠
+
+<h2 id="roomCount">0</h2>
+
+<p>Voice Rooms</p>
+
+</div>
+
+<div class="dashboard-card">
+
+🎤
+
+<h2 id="speakingNow">0</h2>
+
+<p>Speaking Now</p>
+
+</div>
+
+</section>
+
+<!-- ================= HERO ================= -->
+
+<header class="hero">
+
+<h1>
+
+Practice English<br>
+
+With Real People
+
+</h1>
+
+<p>
+
+Join voice rooms, meet learners from around the world,
+
+improve your speaking confidence,
+
+and make international friends.
+
+</p>
+
+<div class="hero-buttons">
+
+<button class="primary-btn">
+
+🚀 Start Speaking
+
+</button>
+
+<button class="secondary-btn">
+
+🌍 Explore Rooms
+
+</button>
+
+</div>
+
+</header>
+<!-- ================= PROFILE ================= -->
+
+<section class="profile-box">
+
+<h2>👤 Your Profile</h2>
+
+<input
+id="username"
+type="text"
+placeholder="Enter your name">
+
+<select id="country"></select>
+
+</section>
+
+<!-- ================= CONTROLS ================= -->
+
+<section class="controls">
+
+<p id="currentRoom">
+
+No room joined
+
+</p>
+
+<button
+id="muteButton"
+onclick="toggleMute()">
+
+🎤 Mute
+
+</button>
+
+<button
+id="leaveButton"
+onclick="leaveRoom()">
+
+🚪 Leave Room
+
+</button>
+
+<button
+onclick="window.location.href='profile.html'">
+
+👤 My Profile
+
+</button>
+<button id="logoutBtn">
+    🚪 Logout
+</button>
+<a href="create-room.html">
+
+<button class="createRoom">
+
+➕ Create Room
+
+</button>
+
+</a>
+
+</section>
+
+<!-- ================= ROOMS ================= -->
+
+<h2 class="category-title">
+
+🌍 Popular Languages
+
+</h2>
+
+<section
+id="rooms"
+class="rooms">
+<!-- English Beginners -->
+
+<div class="card">
+
+<div class="room-badge">🔥 Popular</div>
+
+<h2>🇬🇧 English Beginners</h2>
+
+<p class="room-level">
+⭐ Beginner
+</p>
+
+<p>
+Practice basic English conversation with learners from around the world.
+</p>
+
+<p id="count-english-beginners">
+👥 0 people online
+</p>
+
+<p class="speaking-count">
+🎤 Speaking:
+<span id="speaking-english-beginners">0</span>
+</p>
+
+<button onclick="joinRoom('english-beginners')">
+🎤 Join Conversation
+</button>
+
+</div>
+
+<!-- English Advanced -->
+
+<div class="card">
+
+<div class="room-level advanced">
+🔵 Advanced
+</div>
+
+<h2>🎓 English Advanced</h2>
+
+<p class="room-description">
+Discuss advanced topics with fluent English speakers.
+</p>
+
+<div id="count-english-advanced" class="room-count">
+👥 0 Online
+</div>
+
+<button onclick="joinRoom('english-advanced')">
+🚀 Join Room
+</button>
+
+</div>
+
+<!-- French -->
+
+<div class="card">
+
+<div class="room-level french">
+🟣 French
+</div>
+
+<h2>🇫🇷 French Room</h2>
+
+<p class="room-description">
+Practice French with native speakers and learners.
+</p>
+
+<div id="count-french-room" class="room-count">
+ Online
+</div>
+
+<button onclick="joinRoom('french-room')">
+🚀 Join Room
+</button>
+
+</div>
+
+</section>
+
+<h2 class="category-title">
+🌏 Asian Languages
+</h2>
+
+<section class="rooms">
+
+<div class="card">
+
+<h2>🇯🇵 Japanese</h2>
+
+<p>Practice Japanese conversation.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🇰🇷 Korean</h2>
+
+<p>Practice Korean conversation.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🇨🇳 Chinese</h2>
+
+<p>Practice Chinese conversation.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+</section>
+
+<h2 class="category-title">
+🌍 African Languages
+</h2>
+
+<section class="rooms">
+
+<div class="card">
+
+<h2>🇷🇼 Kinyarwanda</h2>
+
+<p>Practice Kinyarwanda with native speakers.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🇰🇪 Swahili</h2>
+
+<p>Practice Swahili conversation.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+</section>
+
+<h2 class="category-title">
+🌍 European Languages
+</h2>
+
+<section class="rooms">
+
+<div class="card">
+
+<h2>🇪🇸 Spanish</h2>
+
+<p>Practice Spanish conversation.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🇩🇪 German</h2>
+
+<p>Practice German conversation.</p>
+
+<button>
+Coming Soon
+</button>
+
+</div>
+
+</section>
+<!-- ================= USERS ================= -->
+
+<section class="users-section">
+
+<h2>👥 People in this Room</h2>
+
+<div class="users-panel">
+
+<div class="users-header">
+
+👥 <span>People in this Room</span>
+
+</div>
+
+<ul id="userList"></ul>
+
+</div>
+
+</section>
+
+<!-- ================= CHAT ================= -->
+
+<section class="chat-section">
+
+<h2>💬 Room Chat</h2>
+
+<div id="chatMessages"></div>
+
+<div class="chat-input">
+
+<input
+type="text"
+id="chatInput"
+placeholder="Type your message...">
+
+<button onclick="sendMessage()">
+
+Send
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+<p>
+
+© 2026 SpeakUp Global — Learn English Through Real Conversations.
+
+</p>
+
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
+<script src="countries.js"></script>
+
+<script src="script.js"></script>
+
+<audio id="remoteAudio" autoplay></audio>
+<script>
+const role = localStorage.getItem("role");
+
+if (role === "admin") {
+    document.getElementById("adminMenu").style.display = "block";
+}
+</script>
+</body>
+
+</html>

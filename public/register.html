@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<link rel="icon" type="image/png" href="/Image/logo.png">
+<link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+
+<nav>
+<nav class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">🎤</div>
+
+        <div>
+            <h2>SPEAKUP GLOBAL</h2>
+            <p>SPEAK. CONNECT. GROW.</p>
+        </div>
+
+    </div>
+
+    <ul>
+
+        <li><a href="index.html">🏠 Home</a></li>
+
+        <li><a href="create-room.html">➕ Create Room</a></li>
+
+        <li><a href="login.html">👤 Login</a></li>
+
+        <li><a href="register.html" class="active">✍ Register</a></li>
+
+    </ul>
+
+</nav>
+</nav>
+
+<div class="form-container">
+
+<h1>Create Your Account</h1>
+
+<form id="registerForm" enctype="multipart/form-data">
+
+<label>Full Name</label>
+<input type="text" name="fullname" placeholder="Enter your full name" required>
+
+<label>Email Address</label>
+<input type="email" name="email" placeholder="Enter your email" required>
+
+<label>Username</label>
+<input type="text" name="username" placeholder="Choose a username" required>
+
+<label>Password</label>
+<input type="password" name="password" placeholder="Create a password" required>
+
+<label>Confirm Password</label>
+<input type="password" name="confirmPassword" placeholder="Confirm your password" required>
+
+<label>Profile Picture</label>
+<input
+    type="file"
+    id="profilePicture"
+    name="profilePicture"
+    accept="image/*">
+
+<button type="submit">Register</button>
+<img
+    id="preview"
+    src=""
+    style="display:none; width:120px; height:120px; border-radius:50%; margin-top:15px;">
+</form>
+
+</div>
+
+
+<script>
+const picture = document.getElementById("profilePicture");
+const preview = document.getElementById("preview");
+
+picture.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    }
+
+});
+</script>
+<script>
+const registerForm = document.getElementById("registerForm");
+
+registerForm.addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const formData = new FormData(registerForm);
+
+    const response = await fetch("/upload-profile", {
+        method: "POST",
+        body: formData
+    });
+
+    const result = await response.json();
+
+    if(result.success){
+        alert("Profile picture uploaded successfully!");
+    }else{
+        alert("Upload failed.");
+    }
+
+});
+</script>
+</body>
+</html>

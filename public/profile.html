@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Profile</title>
+<link rel="icon" type="image/png" href="/Image/logo.png">
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <h1>👤 My Profile</h1>
+
+    <img id="profileImage"
+         src="images/default-profile.png"
+         class="profile-photo">
+
+    <h2 id="profileName">Username</h2>
+
+    <p id="profileCountry">🌍 Country</p>
+    <div class="profile-stats">
+
+    <div class="stat-card">
+        <h3 id="roomsJoined">0</h3>
+        <p>Rooms Joined</p>
+    </div>
+
+    <div class="stat-card">
+        <h3 id="friendsCount">0</h3>
+        <p>Friends</p>
+    </div>
+
+    <div class="stat-card">
+        <h3 id="memberSince">2026</h3>
+        <p>Member Since</p>
+    </div>
+
+</div>
+    <hr>
+
+    <h3>About Me</h3>
+
+    <textarea id="aboutMe"
+        placeholder="Write something about yourself..."></textarea>
+
+    <br><br>
+
+    <button onclick="saveProfile()">
+        💾 Save Profile
+    </button>
+
+    <button onclick="window.location.href='index.html'">
+        ⬅ Back Home
+    </button>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="profile.js"></script>
+
+</body>
+</html>

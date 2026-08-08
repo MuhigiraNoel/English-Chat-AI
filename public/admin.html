@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    margin:0;
+    background:#111827;
+    color:white;
+    font-family:Arial;
+}
+
+.sidebar{
+    width:220px;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    background:#1f2937;
+    padding:20px;
+}
+
+.sidebar h2{
+    color:#ff4fa3;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    margin:18px 0;
+}
+
+.main{
+    margin-left:240px;
+    padding:30px;
+}
+
+.card{
+    display:inline-block;
+    width:220px;
+    background:#1f2937;
+    padding:20px;
+    border-radius:10px;
+    margin:15px;
+    text-align:center;
+}
+
+.number{
+    font-size:35px;
+    color:#00e5ff;
+}
+/* =========================
+   USERS TABLE
+========================= */
+
+#usersTable{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    background:#1f2937;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+#usersTable th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+    text-align:left;
+}
+
+#usersTable td{
+    padding:15px;
+    border-bottom:1px solid #374151;
+    vertical-align:middle;
+}
+
+#usersTable tr:hover{
+    background:#273549;
+}
+
+#usersTable th,
+#usersTable td{
+    white-space:nowrap;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+.actions button{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+}
+
+.editBtn{
+    background:#3b82f6;
+}
+
+.blockBtn{
+    background:#f59e0b;
+}
+
+.deleteBtn{
+    background:#ef4444;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 40px;
+}
+
+#usersTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+#announcement {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>ADMIN</h2>
+
+<a href="#">Dashboard</a>
+
+<a href="#">Users</a>
+
+<a href="#">Rooms</a>
+
+<a href="#">Reports</a>
+
+<a href="#">Announcements</a>
+
+<a href="#">Settings</a>
+
+</div>
+
+<div class="main">
+
+<h1>Dashboard</h1>
+
+<div class="card">
+<div>Total Users</div>
+<div class="number" id="users">0</div>
+</div>
+
+<div class="card">
+<div>Online Users</div>
+<div class="number" id="online">0</div>
+</div>
+
+<div class="card">
+<div>Active Rooms</div>
+<div class="number" id="rooms">0</div>
+</div>
+
+<div class="card">
+<div>Reports</div>
+<div class="number" id="reports">0</div>
+</div>
+
+
+<h2>Registered Users</h2>
+<div class="table-container">
+<div class="table-container">
+<table id="usersTable">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody id="usersBody">
+
+    </tbody>
+</table>
+
+</div>
+<hr>
+
+<h2>📢 Website Announcement</h2>
+
+<textarea
+    id="announcement"
+    rows="5"
+    placeholder="Write an announcement for all users..."
+    style="width:100%; padding:15px; font-size:16px; border-radius:8px;"></textarea>
+
+<br><br>
+
+<button id="saveAnnouncement">
+    💾 Save Announcement
+</button>
+
+<hr>
+
+<h2>⚙️ Website Settings</h2>
+
+<label>Website Name</label><br>
+<input
+    type="text"
+    id="websiteName"
+    placeholder="Website Name"
+    style="width:100%; padding:10px; margin-bottom:15px;">
+
+<label>Homepage Title</label><br>
+<input
+    type="text"
+    id="homepageTitle"
+    placeholder="Homepage Title"
+    style="width:100%; padding:10px; margin-bottom:15px;">
+
+<label>Contact Email</label><br>
+<input
+    type="email"
+    id="contactEmail"
+    placeholder="Contact Email"
+    style="width:100%; padding:10px; margin-bottom:15px;">
+
+<label>
+    <input
+        type="checkbox"
+        id="maintenanceMode">
+    Enable Maintenance Mode
+</label>
+
+<br><br>
+
+<button id="saveSettings">
+    💾 Save Settings
+</button>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>
