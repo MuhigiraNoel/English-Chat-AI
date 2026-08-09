@@ -112,6 +112,24 @@ db.serialize(() => {
     });
 
 });
+// ===============================
+// CREATE ADMIN ACCOUNT IF NEEDED
+// ===============================
+
+const ADMIN_USERNAME = "muhigira";
+db.run(
+    `UPDATE users
+     SET role = 'admin'
+     WHERE username = ?`,
+    [ADMIN_USERNAME],
+    function (err) {
+        if (err) {
+            console.error("Admin setup error:", err.message);
+        } else {
+            console.log("Admin role checked. Rows updated:", this.changes);
+        }
+    }
+);
 
 
 // Serve files from the public folder
