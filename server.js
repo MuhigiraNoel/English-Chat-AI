@@ -191,6 +191,83 @@ app.get("/rooms", (req, res) => {
 
 });
 
+// ===============================
+// Create Room - HTTP POST
+// ===============================
+
+app.post("/create-room", (req, res) => {
+
+    const {
+        roomName,
+        language,
+        level,
+        maxParticipants
+    } = req.body;
+
+
+    if (
+        !roomName ||
+        !language ||
+        !level ||
+        !maxParticipants
+    ) {
+
+        return res.status(400).json({
+            success: false,
+            message: "Please complete all room settings."
+        });
+
+    }
+
+
+    const sql = `
+        INSERT INTO rooms
+        (roomName, language, level, maxParticipants)
+        VALUES (?, ?, ?, ?)
+    `;
+
+
+    db.run(
+        sql,
+        [
+            roomName,
+            language,
+            level,
+            Number(maxParticipants)
+        ],
+        function (err) {
+
+            if (err) {
+
+                console.log(
+                    "Create room database error:",
+                    err.message
+                );
+
+                return res.status(500).json({
+                    success: false,
+                    message: "Unable to save the room."
+                });
+
+            }
+
+
+            console.log(
+                "Room created successfully. ID:",
+                this.lastID
+            );
+
+
+            return res.json({
+                success: true,
+                roomId: this.lastID
+            });
+
+        }
+    );
+
+});
+
 // =========================
 // ADMIN DASHBOARD PROTECTION
 // =========================
