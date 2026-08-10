@@ -429,7 +429,8 @@ socket.on("room-count", (data) => {
     const element = document.getElementById("count-" + data.room);
 
     if (element) {
-        element.textContent = "👥 " + data.count + " people online";
+        element.textContent =
+            "👥 " + data.count + " / " + data.maxParticipants + " users";
     }
 
 });
@@ -680,8 +681,8 @@ socket.on("room-list", (rooms) => {
 Language: ${room.language}
 </p>
 
-<p>
-👥 Max: ${room.maxParticipants}
+<p id="count-${room.roomName}">
+    👥 ${room.currentUsers || 0} / ${room.maxParticipants} users
 </p>
 
 <button onclick="joinRoom('${room.roomName}')">
@@ -726,11 +727,9 @@ async function loadRooms() {
 <p>
 🌍 ${room.language}
 </p>
-
-<p>
-👥 Max: ${room.maxParticipants}
+<p id="count-${room.roomName}">
+    👥 ${room.currentUsers || 0} / ${room.maxParticipants} users
 </p>
-
 <button onclick="joinRoom('${room.roomName}')">
 🎤 Join Conversation
 </button>

@@ -168,28 +168,29 @@ app.use("/uploads", express.static("data/uploads"));
 app.get("/rooms", (req, res) => {
 
     db.all(
-
         "SELECT * FROM rooms ORDER BY id DESC",
-
         [],
-
         (err, rows) => {
 
             if (err) {
-
                 console.log(err.message);
-
                 return res.json([]);
-
             }
 
-            res.json(rows);
+            const roomsWithUsers = rows.map(room => ({
+                ...room,
+                currentUsers: roomUsers[room.roomName]
+                    ? roomUsers[room.roomName].length
+                    : 0
+            }));
+
+            res.json(roomsWithUsers);
 
         }
-
     );
 
 });
+
 // =========================
 // ADMIN DASHBOARD PROTECTION
 // =========================
@@ -811,10 +812,23 @@ socket.to(roomId).emit("user-joined", {
         io.to(roomId).emit("user-list", roomUsers[roomId]);
 
         // Send room count
-        io.to(roomId).emit("room-count", {
+        db.get(
+    "SELECT maxParticipants FROM rooms WHERE roomName = ?",
+    [roomId],
+    (err, room) => {
+
+        if (err || !room) {
+            return;
+        }
+
+        io.emit("room-count", {
             room: roomId,
-            count: roomUsers[roomId].length
+            count: roomUsers[roomId].length,
+            maxParticipants: room.maxParticipants
         });
+
+    }
+);
 
     }); 
    // ===============================
@@ -953,11 +967,23 @@ io.to(roomId).emit("user-left", {
             roomUsers[roomId] = roomUsers[roomId].filter(user => user.id !== socket.id);
 
             io.to(roomId).emit("user-list", roomUsers[roomId]);
+            db.get(
+    "SELECT maxParticipants FROM rooms WHERE roomName = ?",
+    [roomId],
+    (err, room) => {
 
-            io.to(roomId).emit("room-count", {
-                room: roomId,
-                count: roomUsers[roomId].length
-            });
+        if (err || !room) {
+            return;
+        }
+
+        io.emit("room-count", {
+            room: roomId,
+            count: roomUsers[roomId].length,
+            maxParticipants: room.maxParticipants
+        });
+
+    }
+);
 
             if (roomUsers[roomId].length === 0) {
                 delete roomUsers[roomId];
