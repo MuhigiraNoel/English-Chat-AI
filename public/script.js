@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 // Join a room when a room card is clicked
-async function joinRoom(roomName) {
+async function joinRoom(roomName, maxParticipants) {
 
     const username = document.getElementById("username").value.trim();
     const country = document.getElementById("country").value;
@@ -419,21 +419,98 @@ console.log("Joining room:", ROOM_ID);
         roomText.textContent =
             "You joined: " + roomName + " as " + username;
     }
+// =====================================
+// SHOW ACTIVE ROOM PANEL
+// =====================================
+
+const activeRoomPanel = document.getElementById("activeRoomPanel");
+
+if (activeRoomPanel) {
+    activeRoomPanel.classList.add("room-active");
+}
+
+const roomDiscovery =
+    document.getElementById("roomDiscovery");
+
+if (roomDiscovery) {
+    roomDiscovery.style.display = "none";
+}
+
+// Show room name
+const activeRoomName = document.getElementById("activeRoomName");
+
+if (activeRoomName) {
+    activeRoomName.textContent = roomName;
+}
+
+// Show room capacity
+const activeRoomCount = document.getElementById("activeRoomCount");
+
+if (activeRoomCount) {
+    activeRoomCount.textContent =
+        "0 / " + maxParticipants;
+}
 
 }
 
 
 // Update room member count
+
+// ===============================
+// LIVE ROOM MEMBER COUNT
+// ===============================
+
 socket.on("room-count", (data) => {
 
+    // Update old room-card counter if it exists
     const element = document.getElementById("count-" + data.room);
 
     if (element) {
         element.textContent =
-            "👥 " + data.count + " / " + data.maxParticipants + " users";
+            "👥 " + data.count + " people online";
+    }
+
+    // Update active room counter
+    const activeRoomCount =
+        document.getElementById("activeRoomCount");
+
+    if (
+        activeRoomCount &&
+        data.room === ROOM_ID
+    ) {
+
+        // Find the maximum from the active room card
+        const activeRoomCard =
+            document.querySelector(
+                `.card button[onclick*="${data.room}"]`
+            );
+
+        let maxParticipants = 15;
+
+        if (activeRoomCard) {
+
+            const card = activeRoomCard.closest(".card");
+
+            if (card) {
+
+                const maxText = card.innerText.match(
+                    /Max:\s*(\d+)/
+                );
+
+                if (maxText) {
+                    maxParticipants =
+                        parseInt(maxText[1]);
+                }
+
+            }
+        }
+
+        activeRoomCount.textContent =
+            data.count + " / " + maxParticipants;
     }
 
 });
+
 // Show the users in the room
 socket.on("user-list", (users) => {
 
@@ -520,7 +597,19 @@ socket.emit("mute-status", {
 });
 }
 // Leave the current room
-function leaveRoom() {
+function leaveRoom() {const activeRoomPanel =
+    document.getElementById("activeRoomPanel");
+
+if (activeRoomPanel) {
+    activeRoomPanel.classList.remove("room-active");
+}
+
+const roomDiscovery =
+    document.getElementById("roomDiscovery");
+
+if (roomDiscovery) {
+    roomDiscovery.style.display = "";
+}
 
     if (localStream) {
         localStream.getTracks().forEach(track => track.stop());
@@ -684,11 +773,9 @@ Language: ${room.language}
 <p id="count-${room.roomName}">
     👥 ${room.currentUsers || 0} / ${room.maxParticipants} users
 </p>
-
-<button onclick="joinRoom('${room.roomName}')">
-🎤 Join Conversation
+<button onclick="joinRoom('${room.roomName}', ${room.maxParticipants})">
+    🎤 Join Conversation
 </button>
-
 `;
 
         roomSection.appendChild(card);
@@ -730,8 +817,8 @@ async function loadRooms() {
 <p id="count-${room.roomName}">
     👥 ${room.currentUsers || 0} / ${room.maxParticipants} users
 </p>
-<button onclick="joinRoom('${room.roomName}')">
-🎤 Join Conversation
+<button onclick="joinRoom('${room.roomName}', ${room.maxParticipants})">
+    🎤 Join Conversation
 </button>
 
 </div>

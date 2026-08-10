@@ -202,12 +202,13 @@ onclick="window.location.href='profile.html'">
 </section>
 
 <!-- ================= ROOMS ================= -->
-
 <h2 class="category-title">
 
 🌍 Popular Languages
 
 </h2>
+
+<div id="roomDiscovery">
 
 <section
 id="rooms"
@@ -400,48 +401,96 @@ Coming Soon
 </div>
 
 </section>
-<!-- ================= USERS ================= -->
-
-<section class="users-section">
-
-<h2>👥 People in this Room</h2>
-
-<div class="users-panel">
-
-<div class="users-header">
-
-👥 <span>People in this Room</span>
-
 </div>
+<!-- ================= ACTIVE ROOM ================= -->
 
-<ul id="userList"></ul>
+<section id="activeRoomPanel" class="active-room-panel">
 
-</div>
+    <!-- ROOM HEADER -->
+    <div class="active-room-header">
 
-</section>
+        <div>
+            <h2>
+                🎤 <span id="activeRoomName">English Beginner</span>
+            </h2>
 
-<!-- ================= CHAT ================= -->
+            <p id="activeRoomStatus">
+                Ready to speak
+            </p>
+        </div>
 
-<section class="chat-section">
+        <div class="active-room-count">
+            👥 <span id="activeRoomCount">0 / 15</span>
+        </div>
 
-<h2>💬 Room Chat</h2>
+    </div>
 
-<div id="chatMessages"></div>
 
-<div class="chat-input">
+    <!-- PEOPLE + CHAT -->
+    <div class="active-room-body">
 
-<input
-type="text"
-id="chatInput"
-placeholder="Type your message...">
+        <!-- PEOPLE -->
+        <div class="room-people">
 
-<button onclick="sendMessage()">
+            <div class="room-panel-title">
+                👥 PEOPLE
+            </div>
 
-Send
+            <ul id="userList"></ul>
 
-</button>
+        </div>
 
-</div>
+
+        <!-- CHAT -->
+        <div class="room-chat">
+
+            <div class="room-panel-title">
+                💬 ROOM CHAT
+            </div>
+
+            <div id="chatMessages"></div>
+
+            <div class="chat-input">
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Type a message..."
+                    autocomplete="off">
+
+                <button onclick="sendMessage()">
+                    Send
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ROOM CONTROLS -->
+    <div class="active-room-controls">
+
+        <button
+            id="muteButton"
+            onclick="toggleMute()">
+            🎤 Mute
+        </button>
+
+        <button
+            id="leaveButton"
+            onclick="leaveRoom()">
+            🚪 Leave Room
+        </button>
+
+        <a href="profile.html">
+            <button>
+                👤 My Profile
+            </button>
+        </a>
+
+    </div>
 
 </section>
 

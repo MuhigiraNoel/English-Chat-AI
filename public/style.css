@@ -1511,3 +1511,383 @@ color:white;
     }
 
 }
+
+/* =====================================================
+   SPEAKUP GLOBAL - NEW ACTIVE ROOM DESIGN
+   ===================================================== */
+
+.active-room-panel {
+    width: min(1100px, 94%);
+    margin: 40px auto;
+    background: rgba(15, 27, 48, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+    color: white;
+}
+
+/* ===============================
+   ROOM HEADER
+   =============================== */
+
+.active-room-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 26px;
+    background: rgba(30, 52, 78, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.active-room-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
+.active-room-header p {
+    margin: 6px 0 0;
+    color: #b8c5d6;
+    font-size: 14px;
+}
+
+.active-room-count {
+    background: #162b45;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+/* ===============================
+   PEOPLE + CHAT
+   =============================== */
+
+.active-room-body {
+    display: grid;
+    grid-template-columns: 32% 68%;
+    min-height: 480px;
+}
+
+/* ===============================
+   PEOPLE PANEL
+   =============================== */
+
+.room-people {
+    background: rgba(25, 42, 63, 0.95);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.room-panel-title {
+    padding: 16px 20px;
+    font-size: 17px;
+    font-weight: bold;
+    background: rgba(10, 20, 35, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* People list scrolls independently */
+
+.room-people #userList {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 390px;
+}
+
+.room-people #userList li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 12px;
+    margin-bottom: 7px;
+    background: rgba(48, 70, 96, 0.8);
+    border-radius: 9px;
+    transition: 0.2s;
+}
+
+.room-people #userList li:hover {
+    background: rgba(63, 88, 118, 0.95);
+}
+
+/* Online green dot */
+
+.room-people .online-dot {
+    width: 9px;
+    height: 9px;
+    min-width: 9px;
+    border-radius: 50%;
+    background: #20d56b;
+    box-shadow: 0 0 8px rgba(32, 213, 107, 0.8);
+}
+
+/* ===============================
+   CHAT PANEL
+   =============================== */
+
+.room-chat {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: rgba(12, 24, 42, 0.9);
+}
+
+/* Chat messages take available space */
+
+.room-chat #chatMessages {
+    flex: 1;
+    height: 390px;
+    max-height: 390px;
+    overflow-y: auto;
+    padding: 18px;
+}
+
+/* Individual messages */
+
+.room-chat #chatMessages p {
+    margin: 0 0 12px;
+    padding: 10px 13px;
+    background: rgba(35, 55, 78, 0.85);
+    border-radius: 10px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.room-chat #chatMessages strong {
+    color: #42b9ff;
+}
+
+/* ===============================
+   CHAT INPUT
+   =============================== */
+
+.room-chat .chat-input {
+    display: flex;
+    gap: 10px;
+    padding: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 27, 48, 0.98);
+}
+
+.room-chat .chat-input input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 15px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    background: white;
+    color: #222;
+    font-size: 15px;
+}
+
+.room-chat .chat-input button {
+    border: none;
+    border-radius: 10px;
+    padding: 0 22px;
+    background: #20c95c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.room-chat .chat-input button:hover {
+    background: #18ad4e;
+    transform: translateY(-1px);
+}
+
+/* ===============================
+   ROOM CONTROLS
+   =============================== */
+
+.active-room-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: rgba(18, 31, 51, 0.98);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.active-room-controls button {
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.active-room-controls button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.active-room-controls a {
+    text-decoration: none;
+}
+
+/* ===============================
+   SCROLLBAR
+   =============================== */
+
+.room-people #userList::-webkit-scrollbar,
+.room-chat #chatMessages::-webkit-scrollbar {
+    width: 7px;
+}
+
+.room-people #userList::-webkit-scrollbar-thumb,
+.room-chat #chatMessages::-webkit-scrollbar-thumb {
+    background: rgba(120, 150, 180, 0.55);
+    border-radius: 10px;
+}
+
+.room-people #userList::-webkit-scrollbar-track,
+.room-chat #chatMessages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* ===============================
+   MOBILE
+   =============================== */
+
+@media (max-width: 768px) {
+
+    .active-room-panel {
+        width: 96%;
+        margin: 25px auto;
+        border-radius: 14px;
+    }
+
+    .active-room-header {
+        padding: 16px;
+    }
+
+    .active-room-header h2 {
+        font-size: 19px;
+    }
+
+    .active-room-count {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .active-room-body {
+        grid-template-columns: 1fr;
+    }
+
+    .room-people {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .room-people #userList {
+        max-height: 180px;
+    }
+
+    .room-chat #chatMessages {
+        height: 300px;
+        max-height: 300px;
+    }
+
+    .active-room-controls {
+        flex-wrap: wrap;
+    }
+
+    .active-room-controls button {
+        padding: 10px 14px;
+    }
+
+    .room-chat .chat-input {
+        padding: 10px;
+    }
+
+    .room-chat .chat-input button {
+        padding: 0 15px;
+    }
+}
+
+/* Active room is hidden until a user joins */
+#activeRoomPanel {
+    display: none;
+}
+
+#activeRoomPanel.room-active {
+    display: block;
+}
+
+/* =====================================================
+   FULL SCREEN ACTIVE ROOM
+   ===================================================== */
+
+#activeRoomPanel.room-active {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+
+    border-radius: 0;
+    border: none;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #0b1728;
+
+    overflow: hidden;
+}
+
+/* Header stays at the top */
+
+#activeRoomPanel.room-active .active-room-header {
+    flex: 0 0 auto;
+}
+
+/* People + Chat fill the screen */
+
+#activeRoomPanel.room-active .active-room-body {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+}
+
+/* People list can scroll */
+
+#activeRoomPanel.room-active .room-people #userList {
+    max-height: none;
+    height: 100%;
+}
+
+/* Chat fills available space */
+
+#activeRoomPanel.room-active .room-chat {
+    min-height: 0;
+}
+
+#activeRoomPanel.room-active .room-chat #chatMessages {
+    height: auto;
+    max-height: none;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Controls stay at bottom */
+
+#activeRoomPanel.room-active .active-room-controls {
+    flex: 0 0 auto;
+}

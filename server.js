@@ -964,10 +964,13 @@ io.emit("online-users", onlineUsers);
 io.to(roomId).emit("user-left", {
     username: socket.username
 });
-            roomUsers[roomId] = roomUsers[roomId].filter(user => user.id !== socket.id);
+      roomUsers[roomId] = roomUsers[roomId].filter(
+    user => user.id !== socket.id
+);
 
-            io.to(roomId).emit("user-list", roomUsers[roomId]);
-            db.get(
+io.to(roomId).emit("user-list", roomUsers[roomId]);
+
+db.get(
     "SELECT maxParticipants FROM rooms WHERE roomName = ?",
     [roomId],
     (err, room) => {
@@ -976,18 +979,22 @@ io.to(roomId).emit("user-left", {
             return;
         }
 
-        io.emit("room-count", {
+        const currentCount = roomUsers[roomId]
+            ? roomUsers[roomId].length
+            : 0;
+
+        io.to(roomId).emit("room-count", {
             room: roomId,
-            count: roomUsers[roomId].length,
+            count: currentCount,
             maxParticipants: room.maxParticipants
         });
 
     }
 );
 
-            if (roomUsers[roomId].length === 0) {
-                delete roomUsers[roomId];
-            }
+if (roomUsers[roomId].length === 0) {
+    delete roomUsers[roomId];
+}
         }
 
     });
