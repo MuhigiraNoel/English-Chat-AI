@@ -3,91 +3,1165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Room</title>
-<link rel="icon" type="image/png" href="/Image/logo.png">
-    <link rel="stylesheet" href="style.css">
+
+    <title>Create Room - SpeakUp Global</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+
+        body {
+            background:
+                linear-gradient(rgba(5, 14, 35, 0.82), rgba(5, 14, 35, 0.88)),
+                background-image: none; center/cover fixed no-repeat;
+
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        .navbar {
+            width: 100%;
+            height: 82px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 32px;
+
+            background: rgba(5, 12, 30, 0.94);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            margin-right: 45px;
+        }
+
+        .logo span {
+            color: #9b4dff;
+        }
+
+
+        /* Horizontal navigation */
+
+        .nav-scroll {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            flex: 1;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            scrollbar-width: none;
+
+            white-space: nowrap;
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .nav-link {
+            color: #f4f4f4;
+
+            text-decoration: none;
+
+            font-size: 17px;
+            font-weight: 600;
+
+            padding: 13px 17px;
+
+            border-radius: 10px;
+
+            transition: 0.25s;
+
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: rgba(50, 100, 255, 0.16);
+
+            color: white;
+
+            border-bottom: 3px solid #2878ff;
+        }
+
+
+        /* Login / Register */
+
+        .nav-buttons {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-left: 15px;
+        }
+
+        .login-btn,
+        .register-btn {
+            text-decoration: none;
+
+            padding: 13px 25px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .login-btn {
+            color: white;
+
+            border: 1px solid #2878ff;
+
+            background: transparent;
+        }
+
+        .login-btn:hover {
+            background: rgba(40, 120, 255, 0.15);
+        }
+
+        .register-btn {
+            color: white;
+
+            background: linear-gradient(
+                100deg,
+                #286eff,
+                #a82df0
+            );
+        }
+
+        .register-btn:hover {
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        .page-container {
+            width: 100%;
+
+            min-height: calc(100vh - 82px);
+
+            display: flex;
+
+            justify-content: center;
+
+            padding: 45px 25px 70px;
+        }
+
+
+        /* =========================================
+           CREATE ROOM CARD
+        ========================================= */
+
+        .create-card {
+            width: min(900px, 100%);
+
+            background: rgba(12, 27, 58, 0.91);
+
+            border: 1px solid rgba(71, 111, 255, 0.42);
+
+            border-radius: 22px;
+
+            padding: 45px;
+
+            box-shadow:
+                0 20px 70px rgba(0, 0, 0, 0.45),
+                inset 0 0 40px rgba(50, 100, 255, 0.04);
+
+            backdrop-filter: blur(12px);
+
+            align-self: flex-start;
+        }
+
+
+        /* Icon */
+
+        .room-icon {
+            width: 74px;
+            height: 74px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 34px;
+
+            background: linear-gradient(
+                135deg,
+                #1677ff,
+                #a82df0
+            );
+
+            box-shadow:
+                0 10px 35px rgba(72, 83, 255, 0.35);
+        }
+
+
+        .create-title {
+            text-align: center;
+
+            font-size: 38px;
+
+            margin-bottom: 12px;
+        }
+
+        .create-subtitle {
+            text-align: center;
+
+            color: #b9c3d8;
+
+            font-size: 18px;
+
+            line-height: 1.6;
+
+            max-width: 650px;
+
+            margin: 0 auto 38px;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
+        }
+
+
+        .form-input,
+        .form-select {
+            width: 100%;
+
+            height: 58px;
+
+            border-radius: 11px;
+
+            border: 1px solid rgba(110, 135, 200, 0.35);
+
+            background: rgba(35, 50, 85, 0.72);
+
+            color: white;
+
+            font-size: 17px;
+
+            padding: 0 17px;
+
+            outline: none;
+
+            transition: 0.25s;
+        }
+
+
+        .form-input::placeholder {
+            color: #aeb8ca;
+        }
+
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #357cff;
+
+            box-shadow:
+                0 0 0 3px rgba(53, 124, 255, 0.14);
+        }
+
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: #172443;
+
+            color: white;
+        }
+
+
+        /* =========================================
+           THREE FORM FIELDS
+        ========================================= */
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+
+        /* =========================================
+           INFORMATION BOX
+        ========================================= */
+
+        .info-box {
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            padding: 18px 20px;
+
+            margin-top: 5px;
+
+            margin-bottom: 30px;
+
+            border-radius: 13px;
+
+            background: rgba(40, 55, 95, 0.58);
+
+            border: 1px solid rgba(105, 125, 190, 0.28);
+        }
+
+
+        .info-icon {
+            min-width: 50px;
+
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #7935dc,
+                #3c68ff
+            );
+
+            font-size: 24px;
+        }
+
+
+        .info-text strong {
+            display: block;
+
+            font-size: 16px;
+
+            margin-bottom: 5px;
+        }
+
+        .info-text span {
+            color: #aeb9cf;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           CREATE BUTTON
+        ========================================= */
+
+        .create-button {
+            width: 100%;
+
+            min-height: 62px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            background: linear-gradient(
+                100deg,
+                #176fff,
+                #a72be9
+            );
+
+            box-shadow:
+                0 10px 30px rgba(44, 91, 255, 0.25);
+
+            transition: 0.25s;
+        }
+
+
+        .create-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 35px rgba(44, 91, 255, 0.35);
+        }
+
+
+        .create-button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                height: auto;
+
+                min-height: 72px;
+
+                padding: 12px 15px;
+
+                flex-wrap: wrap;
+
+                gap: 10px;
+            }
+
+
+            .logo {
+                width: 100%;
+
+                text-align: center;
+
+                margin-right: 0;
+
+                font-size: 24px;
+            }
+
+
+            .nav-scroll {
+                width: 100%;
+
+                flex: none;
+
+                padding-bottom: 4px;
+
+                justify-content: flex-start;
+            }
+
+
+            .nav-link {
+                font-size: 15px;
+
+                padding: 10px 13px;
+            }
+
+
+            .nav-buttons {
+                width: 100%;
+
+                margin-left: 0;
+
+                justify-content: center;
+            }
+
+
+            .login-btn,
+            .register-btn {
+                padding: 10px 20px;
+
+                font-size: 14px;
+            }
+
+
+            .page-container {
+                padding: 25px 12px 50px;
+            }
+
+
+            .create-card {
+                padding: 28px 20px;
+
+                border-radius: 18px;
+            }
+
+
+            .create-title {
+                font-size: 30px;
+            }
+
+
+            .create-subtitle {
+                font-size: 16px;
+
+                margin-bottom: 28px;
+            }
+
+
+            .form-row {
+                grid-template-columns: 1fr;
+
+                gap: 0;
+            }
+
+
+            .form-input,
+            .form-select {
+                height: 58px;
+
+                font-size: 16px;
+            }
+        }
+
+
+        /* =========================================
+           VERY SMALL PHONES
+        ========================================= */
+
+        @media (max-width: 430px) {
+
+            .logo {
+                font-size: 21px;
+            }
+
+
+            .nav-link {
+                font-size: 14px;
+
+                padding: 9px 12px;
+            }
+
+
+            .create-card {
+                padding: 23px 15px;
+            }
+
+
+            .room-icon {
+                width: 62px;
+                height: 62px;
+
+                font-size: 28px;
+            }
+
+
+            .create-title {
+                font-size: 27px;
+            }
+
+
+            .create-subtitle {
+                font-size: 15px;
+            }
+
+
+            .form-label {
+                font-size: 15px;
+            }
+
+
+            .info-box {
+                align-items: flex-start;
+
+                padding: 15px;
+            }
+
+
+            .info-icon {
+                min-width: 42px;
+
+                width: 42px;
+                height: 42px;
+
+                font-size: 19px;
+            }
+
+
+            .create-button {
+                min-height: 58px;
+
+                font-size: 17px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<nav>
-    <div class="logo">My Free4Talk</div>
 
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#">Rooms</a></li>
-        <li><a href="login.html">Login</a></li
-        <li><a href="register.html">Register</a></li>
-    </ul>
-</nav>
+    <!-- =========================================
+         NAVIGATION
+    ========================================= -->
 
-<div class="form-container">
+    <header class="navbar">
 
-<h1>Create a New Room</h1>
+        <div class="logo">
+            SpeakUp <span>Global</span>
+        </div>
 
-<form id="createRoomForm">
 
-<label>Room Name</label>
+        <nav class="nav-scroll">
 
-<input
-type="text"
-id="roomName"
-placeholder="Example: English Beginners">
+            <a href="index.html" class="nav-link">
+                ?? Home
+            </a>
 
-<label>Language</label>
+            <a href="rooms.html" class="nav-link">
+                ?? Rooms
+            </a>
 
-<select id="roomLanguage">
-<option>English</option>
-<option>French</option>
-<option>Kinyarwanda</option>
-<option>Swahili</option>
-</select>
+            <a href="create-room.html" class="nav-link active">
+                ? Create Room
+            </a>
 
-<label>Level</label>
+            <a href="profile.html" class="nav-link">
+                ?? Profile
+            </a>
 
-<select id="roomLevel">
-<option>Beginner</option>
-<option>Intermediate</option>
-<option>Advanced</option>
-</select>
+            <a href="about.html" class="nav-link">
+                ? About
+            </a>
 
-<label>Maximum Participants</label>
+        </nav>
 
-<input
-type="number"
-id="maxParticipants"
-placeholder="20">
 
-<button type="submit">Create Room</button>
+        <div class="nav-buttons">
 
-</form>
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html" class="register-btn">
+                Register
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main class="page-container">
+
+        <section class="create-card">
+
+
+            <div class="room-icon">
+                ??
+            </div>
+
+
+            <h1 class="create-title">
+                Create a New Room
+            </h1>
+
+
+            <p class="create-subtitle">
+                Create your own room and start connecting
+                with people from around the world.
+            </p>
+
+
+
+            <!-- ROOM FORM -->
+
+            <form id="createRoomForm">
+
+
+                <!-- ROOM NAME -->
+
+                <div class="form-group">
+
+                    <label class="form-label">
+                        Room Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="roomName"
+                        name="roomName"
+                        class="form-input"
+                        placeholder="Example: English Beginners"
+                        required
+                    >
+
+                </div>
+
+
+<!-- LANGUAGE / LEVEL / PARTICIPANTS -->
+
+<div class="form-row">
+
+    <!-- LANGUAGE -->
+    <div class="form-group">
+
+        <label class="form-label">
+            Language
+        </label>
+
+        <div id="languageContainer">
+
+            <!-- FIRST LANGUAGE -->
+            <select
+                id="language"
+                name="language"
+                class="form-select language-select"
+                required
+            >
+
+                <option value="English">
+                    English
+                </option>
+
+                <option value="French">
+                    French
+                </option>
+
+                <option value="Spanish">
+                    Spanish
+                </option>
+
+                <option value="German">
+                    German
+                </option>
+
+                <option value="Italian">
+                    Italian
+                </option>
+
+                <option value="Portuguese">
+                    Portuguese
+                </option>
+
+                <option value="Chinese">
+                    Chinese
+                </option>
+
+                <option value="Japanese">
+                    Japanese
+                </option>
+
+                <option value="Korean">
+                    Korean
+                </option>
+
+                <option value="Hindi">
+                    Hindi
+                </option>
+
+                <option value="Bengali">
+                    Bengali
+                </option>
+
+                <option value="Arabic">
+                    Arabic
+                </option>
+
+                <option value="Russian">
+                    Russian
+                </option>
+
+                <option value="Swahili">
+                    Swahili
+                </option>
+
+                <option value="Kinyarwanda">
+                    Kinyarwanda
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- ADD ANOTHER LANGUAGE -->
+        <button
+            type="button"
+            id="addLanguageButton"
+            class="add-language-button"
+        >
+            + Add another language
+        </button>
+
+    </div>
+
+
+    <!-- LEVEL -->
+    <div class="form-group">
+
+        <label class="form-label">
+            Level
+        </label>
+
+        <select
+            id="level"
+            name="level"
+            class="form-select"
+            required
+        >
+
+            <option value="Beginner">
+                Beginner
+            </option>
+
+            <option value="Elementary">
+                Elementary
+            </option>
+
+            <option value="Intermediate">
+                Intermediate
+            </option>
+
+            <option value="Upper Intermediate">
+                Upper Intermediate
+            </option>
+
+            <option value="Advanced">
+                Advanced
+            </option>
+
+            <option value="Any Level">
+                Any Level
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- MAXIMUM PARTICIPANTS -->
+    <div class="form-group">
+
+        <label class="form-label">
+            Maximum Participants
+        </label>
+
+        <select
+            id="maxParticipants"
+            name="maxParticipants"
+            class="form-select"
+            required
+        >
+
+            <option value="5">
+                5
+            </option>
+
+            <option value="10">
+                10
+            </option>
+
+            <option value="20" selected>
+                20
+            </option>
+
+            <option value="30">
+                30
+            </option>
+
+            <option value="50">
+                50
+            </option>
+
+        </select>
+
+    </div>
 
 </div>
-<script src="/socket.io/socket.io.js"></script>
 
-<script>
+                <!-- INFORMATION -->
 
-const socket = io();
+                <div class="info-box">
 
-document.getElementById("createRoomForm").addEventListener("submit", function(event){
+                    <div class="info-icon">
+                        ??
+                    </div>
 
-    event.preventDefault();
+                    <div class="info-text">
 
-    socket.emit("create-room", {
+                        <strong>
+                            You can change these settings later anytime
+                        </strong>
 
-        roomName: document.getElementById("roomName").value,
+                        <span>
+                            Room settings are flexible and can be
+                            updated as needed.
+                        </span>
 
-        language: document.getElementById("roomLanguage").value,
+                    </div>
 
-        level: document.getElementById("roomLevel").value,
+                </div>
 
-        maxParticipants: document.getElementById("maxParticipants").value
 
-    });
 
-    alert("Room information sent!");
+                <!-- CREATE -->
 
-});
+                <button
+                    type="submit"
+                    class="create-button"
+                >
+                    ? &nbsp; Create Room
+                </button>
 
-</script>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         CREATE ROOM SCRIPT
+    ========================================= -->
+
+    <script>
+
+        const form = document.getElementById("createRoomForm");
+
+        form.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            const roomName =
+                document.getElementById("roomName").value.trim();
+
+            const language =
+                document.getElementById("language").value;
+
+            const level =
+                document.getElementById("level").value;
+
+            const maxParticipants =
+                document.getElementById("maxParticipants").value;
+
+
+            if (!roomName) {
+
+                alert("Please enter a room name.");
+
+                return;
+            }
+
+
+            try {
+
+                const response = await fetch("/create-room", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        roomName: roomName,
+
+                        language: language,
+
+                        level: level,
+
+                        maxParticipants:
+                            Number(maxParticipants)
+
+                    })
+
+                });
+
+
+                const data = await response.json();
+
+
+                if (data.success) {
+
+                    if (data.roomId) {
+
+                        window.location.href =
+                            "room.html?id=" +
+                            encodeURIComponent(data.roomId);
+
+                    } else {
+
+                        window.location.href =
+                            "rooms.html";
+                    }
+
+                } else {
+
+                    alert(
+                        data.message ||
+                        "Unable to create the room."
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Create room error:",
+                    error
+                );
+
+                alert(
+                    "Unable to connect to the server."
+                );
+
+            }
+
+        });
+        // =========================================
+        // ADD ANOTHER LANGUAGE
+        // =========================================
+
+        const languageContainer =
+            document.getElementById("languageContainer");
+
+        const addLanguageButton =
+            document.getElementById("addLanguageButton");
+
+
+        const availableLanguages = [
+            "English",
+            "French",
+            "Spanish",
+            "German",
+            "Italian",
+            "Portuguese",
+            "Chinese",
+            "Japanese",
+            "Korean",
+            "Hindi",
+            "Bengali",
+            "Arabic",
+            "Russian",
+            "Swahili",
+            "Kinyarwanda"
+        ];
+
+
+        addLanguageButton.addEventListener(
+            "click",
+            function () {
+
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.className =
+                    "language-extra";
+
+
+                const select =
+                    document.createElement("select");
+
+                select.className =
+                    "form-select language-select";
+
+
+                availableLanguages.forEach(
+                    function (language) {
+
+                        const option =
+                            document.createElement("option");
+
+                        option.value = language;
+
+                        option.textContent = language;
+
+                        select.appendChild(option);
+
+                    }
+                );
+
+
+                const removeButton =
+                    document.createElement("button");
+
+                removeButton.type = "button";
+
+                removeButton.className =
+                    "remove-language";
+
+                removeButton.textContent = "×";
+
+
+                removeButton.addEventListener(
+                    "click",
+                    function () {
+
+                        wrapper.remove();
+
+                    }
+                );
+
+
+                wrapper.appendChild(select);
+
+                wrapper.appendChild(removeButton);
+
+                languageContainer.appendChild(wrapper);
+
+            }
+        );
+
+    </script>
+
 </body>
 </html>

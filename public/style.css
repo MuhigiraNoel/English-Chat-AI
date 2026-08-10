@@ -1891,3 +1891,69 @@ color:white;
 #activeRoomPanel.room-active .active-room-controls {
     flex: 0 0 auto;
 }
+
+.add-language-button {
+    display: block;
+
+    margin-top: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #6ea0ff;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    padding: 5px 0;
+}
+
+.add-language-button:hover {
+    color: #a879ff;
+}
+
+.language-select {
+    margin-bottom: 8px;
+}
+
+.language-extra {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 8px;
+}
+
+.language-extra .form-select {
+    flex: 1;
+}
+
+.remove-language {
+    width: 45px;
+
+    height: 45px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: rgba(255, 70, 90, 0.15);
+
+    color: #ff7180;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+.remove-language:hover {
+    background: rgba(255, 70, 90, 0.28);
+}
