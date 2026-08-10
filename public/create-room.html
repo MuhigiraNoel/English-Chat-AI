@@ -20,17 +20,18 @@
             font-family: Arial, Helvetica, sans-serif;
             color: white;
         }
+          
 
-        body {
-            background:
-                linear-gradient(rgba(5, 14, 35, 0.82), rgba(5, 14, 35, 0.88)),
-                background-image: none; center/cover fixed no-repeat;
+       body {
+    background:
+        linear-gradient(
+            rgba(5, 14, 35, 0.96),
+            rgba(5, 14, 35, 0.98)
+        );
 
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-
+    min-height: 100vh;
+    overflow-x: hidden;
+}
         /* =========================================
            NAVIGATION
         ========================================= */
@@ -639,83 +640,108 @@
 
 <body>
 
+<!-- =========================================
+     NAVIGATION
+========================================= -->
 
-    <!-- =========================================
-         NAVIGATION
-    ========================================= -->
+<header class="navbar">
 
-    <header class="navbar">
+    <!-- WEBSITE LOGO -->
 
-        <div class="logo">
-            SpeakUp <span>Global</span>
-        </div>
-
-
-        <nav class="nav-scroll">
-
-            <a href="index.html" class="nav-link">
-                ?? Home
-            </a>
-
-            <a href="rooms.html" class="nav-link">
-                ?? Rooms
-            </a>
-
-            <a href="create-room.html" class="nav-link active">
-                ? Create Room
-            </a>
-
-            <a href="profile.html" class="nav-link">
-                ?? Profile
-            </a>
-
-            <a href="about.html" class="nav-link">
-                ? About
-            </a>
-
-        </nav>
+    <div class="logo">
+        SpeakUp <span>Global</span>
+    </div>
 
 
-        <div class="nav-buttons">
+    <!-- MAIN NAVIGATION -->
 
-            <a href="login.html" class="login-btn">
-                Login
-            </a>
+    <nav class="nav-scroll">
 
-            <a href="register.html" class="register-btn">
-                Register
-            </a>
-
-        </div>
-
-    </header>
+        <a
+            href="index.html"
+            class="nav-link"
+        >
+            Home
+        </a>
 
 
-
-    <!-- =========================================
-         MAIN CONTENT
-    ========================================= -->
-
-    <main class="page-container">
-
-        <section class="create-card">
+        <a
+            href="rooms.html"
+            class="nav-link"
+        >
+            Rooms
+        </a>
 
 
-            <div class="room-icon">
-                ??
-            </div>
+        <a
+            href="create-room.html"
+            class="nav-link active"
+        >
+            Create Room
+        </a>
 
 
-            <h1 class="create-title">
-                Create a New Room
-            </h1>
+        <a
+            href="profile.html"
+            class="nav-link"
+        >
+            Profile
+        </a>
 
 
-            <p class="create-subtitle">
-                Create your own room and start connecting
-                with people from around the world.
-            </p>
+        <a
+            href="about.html"
+            class="nav-link"
+        >
+            About
+        </a>
 
+    </nav>
+
+
+    <!-- LOGIN / REGISTER -->
+
+    <div class="nav-buttons">
+
+        <a
+            href="login.html"
+            class="login-btn"
+        >
+            Login
+        </a>
+
+
+        <a
+            href="register.html"
+            class="register-btn"
+        >
+            Register
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================
+     MAIN CONTENT
+========================================= -->
+
+<main class="page-container">
+
+    <section class="create-card">
+<div class="room-icon">
+    +
+</div>
+
+        <h1 class="create-title">
+            Create a New Room
+        </h1>
+
+        <p class="create-subtitle">
+            Create your own room and start connecting
+            with people from around the world.
+        </p>
 
 
             <!-- ROOM FORM -->
@@ -926,12 +952,10 @@
 
                 <!-- INFORMATION -->
 
-                <div class="info-box">
-
-                    <div class="info-icon">
-                        ??
-                    </div>
-
+                <div class="info-box
+<div class="info-icon">
+    i
+</div>                  
                     <div class="info-text">
 
                         <strong>
@@ -950,14 +974,12 @@
 
 
                 <!-- CREATE -->
-
-                <button
-                    type="submit"
-                    class="create-button"
-                >
-                    ? &nbsp; Create Room
-                </button>
-
+<button
+    type="submit"
+    class="create-button"
+>
+    Create Room
+</button>
 
             </form>
 

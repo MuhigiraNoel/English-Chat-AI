@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Room - SpeakUp Global</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <h1 id="roomTitle">
+        Loading room...
+    </h1>
+
+    <p id="roomInfo">
+        Loading room information...
+    </p>
+
+    <hr>
+
+    <h2>People in this room</h2>
+
+    <ul id="userList"></ul>
+
+    <hr>
+
+    <h2>Voice Chat</h2>
+
+    <button id="muteButton">
+        🎤 Mute
+    </button>
+
+    <button id="leaveButton">
+        🚪 Leave Room
+    </button>
+
+    <p id="connectionStatus">
+        Connecting...
+    </p>
+
+    <audio
+        id="remoteAudio"
+        autoplay
+        controls
+    ></audio>
+
+    <hr>
+
+    <h2>Room Chat</h2>
+
+    <div id="chatMessages"></div>
+
+    <input
+        type="text"
+        id="chatInput"
+        placeholder="Type a message..."
+    >
+
+    <button id="sendButton">
+        Send
+    </button>
+
+
+    <!-- Socket.IO -->
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+        const socket = io();
+
+
+        // Get room ID from URL
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const roomId =
+            urlParams.get("id");
+
+
+        console.log(
+            "Room ID:",
+            roomId
+        );
+
+
+        if (!roomId) {
+
+            document.getElementById(
+                "roomTitle"
+            ).textContent =
+                "No room selected.";
+
+        }
+
+
+        // Load room information
+
+        async function loadRoom() {
+
+            try {
+
+                const response =
+                    await fetch("/rooms");
+
+                const rooms =
+                    await response.json();
+
+                const room =
+                    rooms.find(
+                        r =>
+                            String(r.id) ===
+                            String(roomId)
+                    );
+
+
+                if (!room) {
+
+                    document.getElementById(
+                        "roomTitle"
+                    ).textContent =
+                        "Room not found.";
+
+                    return;
+
+                }
+
+
+                document.getElementById(
+                    "roomTitle"
+                ).textContent =
+                    room.roomName;
+
+
+                document.getElementById(
+                    "roomInfo"
+                ).textContent =
+                    "Language: " +
+                    room.language +
+                    " | Level: " +
+                    room.level +
+                    " | Maximum participants: " +
+                    room.maxParticipants;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Room loading error:",
+                    error
+                );
+
+                document.getElementById(
+                    "roomTitle"
+                ).textContent =
+                    "Unable to load room.";
+
+            }
+
+        }
+
+
+        loadRoom();
+
+
+        // Temporary room connection test
+
+        socket.on(
+            "connect",
+            () => {
+
+                console.log(
+                    "Socket connected:",
+                    socket.id
+                );
+
+            }
+        );
+
+
+        // Join the room
+
+        socket.emit(
+            "join-room",
+            {
+
+                room:
+                    roomId,
+
+                username:
+                    localStorage.getItem(
+                        "username"
+                    ) ||
+                    "Guest"
+
+            }
+        );
+
+
+        // Receive users
+
+        socket.on(
+            "user-list",
+            (users) => {
+
+                const list =
+                    document.getElementById(
+                        "userList"
+                    );
+
+
+                list.innerHTML = "";
+
+
+                users.forEach(
+                    user => {
+
+                        const item =
+                            document.createElement(
+                                "li"
+                            );
+
+
+                        item.textContent =
+                            user.username ||
+                            "Guest";
+
+
+                        list.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        // Mute button
+
+        document
+            .getElementById("muteButton")
+            .addEventListener(
+                "click",
+                () => {
+
+                    console.log(
+                        "Mute button clicked"
+                    );
+
+                }
+            );
+
+
+        // Leave room
+
+        document
+            .getElementById("leaveButton")
+            .addEventListener(
+                "click",
+                () => {
+
+                    window.location.href =
+                        "rooms.html";
+
+                }
+            );
+
+
+        // Send chat message
+
+        document
+            .getElementById("sendButton")
+            .addEventListener(
+                "click",
+                () => {
+
+                    const input =
+                        document.getElementById(
+                            "chatInput"
+                        );
+
+
+                    const message =
+                        input.value.trim();
+
+
+                    if (!message) {
+
+                        return;
+
+                    }
+
+
+                    socket.emit(
+                        "chat-message",
+                        {
+
+                            room:
+                                roomId,
+
+                            username:
+                                localStorage.getItem(
+                                    "username"
+                                ) ||
+                                "Guest",
+
+                            message:
+                                message
+
+                        }
+                    );
+
+
+                    input.value = "";
+
+                }
+            );
+
+
+        // Receive chat message
+
+        socket.on(
+            "chat-message",
+            (data) => {
+
+                const box =
+                    document.getElementById(
+                        "chatMessages"
+                    );
+
+
+                const message =
+                    document.createElement(
+                        "p"
+                    );
+
+
+                message.textContent =
+                    data.username +
+                    ": " +
+                    data.message;
+
+
+                box.appendChild(
+                    message
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
