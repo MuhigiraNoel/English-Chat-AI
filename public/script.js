@@ -198,6 +198,9 @@ setInterval(() => {
 // =====================================
 
 socket.on("user-joined", async (data) => {
+const joinSound = new Audio("/sounds/join.mp3");
+joinSound.volume = 0.5;
+joinSound.play().catch(() => {});
 
     console.log("Another user joined");
 
@@ -237,6 +240,9 @@ socket.on("user-joined", async (data) => {
 });
 // Receive offer
 socket.on("user-left", (data) => {
+const leaveSound = new Audio("/sounds/leave.mp3");
+leaveSound.volume = 0.5;
+leaveSound.play().catch(() => {});
 
     const chatMessages = document.getElementById("chatMessages");
 
