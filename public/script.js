@@ -543,30 +543,35 @@ if (user.profilePicture) {
         'style="border-radius:50%;vertical-align:middle;margin-right:10px;">';
 
 }
-    
-li.innerHTML = `
-<span class="online-dot"></span>
+    li.innerHTML = `
+    <span class="online-dot"></span>
 
-${image}
+    ${image}
 
-<span>
+    <span>
 
-${user.owner
-    ? '<span class="owner-badge">OWNER</span>'
-    : ''
-}
+        ${user.owner
+            ? '<span class="owner-badge">OWNER</span>'
+            : ''
+        }
 
-${user.country} ${user.username}
+        ${user.country} ${user.username}
 
-</span>
+    </span>
 
-${
-    user.owner
-        ? ""
-        : `<button class="kick-btn" onclick="kickUser('${user.username}')">Kick</button>`
-}
+    <span
+        id="mic-${user.username}"
+        class="mic-status"
+        style="margin-left:8px;">
+        🎤
+    </span>
+
+    ${
+        user.owner
+            ? ""
+            : `<button class="kick-btn" onclick="kickUser('${user.username}')">Kick</button>`
+    }
 `;
-
     userList.appendChild(li);
 
 });
@@ -601,6 +606,13 @@ socket.emit("mute-status", {
     username: document.getElementById("username").value,
     muted: isMuted
 });
+const myMic = document.getElementById(
+    "mic-" + document.getElementById("username").value
+);
+
+if (myMic) {
+    myMic.textContent = isMuted ? "🔇" : "🎤";
+}
 }
 // Leave the current room
 function leaveRoom() {const activeRoomPanel =
