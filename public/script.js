@@ -908,3 +908,42 @@ if (logoutBtn) {
     });
 
 }
+
+// =====================================
+// OPEN A NEWLY CREATED ROOM
+// =====================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const params = new URLSearchParams(window.location.search);
+    const createdRoom = params.get("room");
+
+    if (!createdRoom) {
+        return;
+    }
+
+    const usernameInput =
+        document.getElementById("username");
+
+    const countryInput =
+        document.getElementById("country");
+
+    if (!usernameInput || !countryInput) {
+        return;
+    }
+
+    const username =
+        usernameInput.value.trim();
+
+    const country =
+        countryInput.value;
+
+    if (!username) {
+        alert("Please enter your name before joining the room.");
+        return;
+    }
+
+    // Use the existing room system
+    joinRoom(createdRoom, 20);
+
+});

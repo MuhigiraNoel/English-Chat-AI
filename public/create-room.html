@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -649,32 +649,29 @@
         <div class="logo">
             SpeakUp <span>Global</span>
         </div>
+<nav class="nav-scroll">
 
+    <a href="index.html" class="nav-link">
+        Home
+    </a>
 
-        <nav class="nav-scroll">
+    <a href="rooms.html" class="nav-link">
+        Rooms
+    </a>
 
-            <a href="index.html" class="nav-link">
-                ?? Home
-            </a>
+    <a href="create-room.html" class="nav-link active">
+        Create Room
+    </a>
 
-            <a href="rooms.html" class="nav-link">
-                ?? Rooms
-            </a>
+    <a href="profile.html" class="nav-link">
+        Profile
+    </a>
 
-            <a href="create-room.html" class="nav-link active">
-                ? Create Room
-            </a>
+    <a href="about.html" class="nav-link">
+        About
+    </a>
 
-            <a href="profile.html" class="nav-link">
-                ?? Profile
-            </a>
-
-            <a href="about.html" class="nav-link">
-                ? About
-            </a>
-
-        </nav>
-
+</nav>
 
         <div class="nav-buttons">
 
@@ -702,7 +699,7 @@
 
 
             <div class="room-icon">
-                ??
+                +
             </div>
 
 
@@ -929,7 +926,7 @@
                 <div class="info-box">
 
                     <div class="info-icon">
-                        ??
+                        +
                     </div>
 
                     <div class="info-text">
@@ -955,7 +952,7 @@
                     type="submit"
                     class="create-button"
                 >
-                    ? &nbsp; Create Room
+                    +&nbsp; Create Room
                 </button>
 
 
@@ -1011,48 +1008,48 @@
                         "Content-Type": "application/json"
                     },
 
-                    body: JSON.stringify({
 
-                        roomName: roomName,
+        body: JSON.stringify({
 
-                        language: language,
+    roomName: roomName,
 
-                        level: level,
+    language: [
+        language,
+        ...Array.from(
+            document.querySelectorAll(
+                "#languageContainer .language-extra select"
+            )
+        ).map(select => select.value)
+    ].join(", "),
 
-                        maxParticipants:
-                            Number(maxParticipants)
+    level: level,
 
-                    })
+    maxParticipants:
+        Number(maxParticipants)
+
+})
+
+
 
                 });
 
 
                 const data = await response.json();
 
+if (data.success) {
 
-                if (data.success) {
+    window.location.href =
+        "index.html?room=" +
+        encodeURIComponent(roomName);
 
-                    if (data.roomId) {
+} else {
 
-                        window.location.href =
-                            "room.html?id=" +
-                            encodeURIComponent(data.roomId);
+    alert(
+        data.message ||
+        "Unable to create the room."
+    );
 
-                    } else {
-
-                        window.location.href =
-                            "rooms.html";
-                    }
-
-                } else {
-
-                    alert(
-                        data.message ||
-                        "Unable to create the room."
-                    );
-
-                }
-
+}
             } catch (error) {
 
                 console.error(
@@ -1139,7 +1136,7 @@
                 removeButton.className =
                     "remove-language";
 
-                removeButton.textContent = "×";
+                removeButton.textContent = "ï¿½";
 
 
                 removeButton.addEventListener(
